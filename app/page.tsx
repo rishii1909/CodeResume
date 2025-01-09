@@ -1,11 +1,15 @@
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
+'use client';
+
+import { SessionProvider as AuthSessionProvider } from 'next-auth/react';
 import { Welcome } from '../components/Welcome/Welcome';
 
 export default function HomePage() {
   return (
     <>
-      <Welcome />
-      <ColorSchemeToggle />
+      <AuthSessionProvider>
+        <Welcome />
+      </AuthSessionProvider>
+      {/* <ColorSchemeToggle /> */}
     </>
   );
 }
