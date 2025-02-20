@@ -1,5 +1,6 @@
 import NextAuth, { Account, Profile, SessionStrategy, User, type JWT } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
+import useAuthStore from '@/stores/auth.store';
 
 export const nextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -26,9 +27,11 @@ export const nextAuthOptions = {
       account: Account | null;
       profile?: Profile;
     }) => {
-      // when user comes back after SignIn, we make sure to save the accessToken from
-      // the logged user, otherwise it would be discarded. We need to make API calls to Github API
-      // on behalf of the logged user, so here we persist the token, since its gonna be needed.
+      if (user) {
+        // Save the user to our auth store
+        const authStore = useAuthStore.getState();
+        authStore.setUser(user);
+      }
       if (user && account && account.provider === 'github') {
         const t = token as any;
         t.username = (profile as any).login; // save the github username
@@ -37,7 +40,7 @@ export const nextAuthOptions = {
         return Promise.resolve(t);
       }
 
-      return undefined;
+      return Promise.resolve({}); // return an empty token object
     },
   },
 };

@@ -2,14 +2,15 @@
 
 import '@mantine/core/styles.css';
 
-import React from 'react';
 import {
   AppShell,
-  Burger,
+  Avatar,
+  Button,
   ColorSchemeScript,
   MantineProvider,
-  MantineRadiusValues,
+  Menu,
   Text,
+  Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { theme } from '../theme';
@@ -19,14 +20,50 @@ import './globals.css';
 import Link from 'next/link';
 import {
   IconBrandFacebookFilled,
+  IconBrandGithubFilled,
   IconBrandInstagramFilled,
   IconBrandTwitterFilled,
-  IconCopyright,
 } from '@tabler/icons-react';
-import { ColorSchemeSwitch } from '@/components/ColorSchemeSwitch/ColorSchemeSwitch';
+
+import '@mantine/carousel/styles.css';
+
+import { usePathname } from 'next/navigation.js';
+import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import useAuthStore from '@/stores/auth.store';
 
 export default function RootLayout({ children }: { children: any }) {
   const [opened, { toggle }] = useDisclosure();
+  const pathname = usePathname();
+
+  return (
+    <SessionProvider>
+      <SessionContent pathname={pathname} opened={opened} toggle={toggle}>
+        {children}
+      </SessionContent>
+    </SessionProvider>
+  );
+}
+
+function SessionContent({
+  pathname,
+  opened,
+  toggle,
+  children,
+}: {
+  pathname: string;
+  opened: boolean;
+  toggle: () => void;
+  children: any;
+}) {
+  const session = useSession();
+
+  const { data } = session;
+
+  const store = useAuthStore();
+
+  if (data?.user?.email && !store.user) store.setUser(data.user);
+
+  const { user } = store;
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -41,7 +78,7 @@ export default function RootLayout({ children }: { children: any }) {
       <body>
         <MantineProvider theme={{ defaultRadius: 'md', ...theme }}>
           <AppShell
-            header={{ height: 50 }}
+            // header={{ height: 50 }}
             navbar={{
               width: 300,
               breakpoint: 'sm',
@@ -52,62 +89,147 @@ export default function RootLayout({ children }: { children: any }) {
             }}
             padding="sm"
           >
-            <AppShell.Header className="py-4 px-4 flex items-center justify-between shadow-md">
-              <Text className="font-bold text-lg">CodeResume</Text>
-              <div className="flex flex-row space-x-6 items-center">
-                <Link href={'/'}>Home</Link>
-                <Link href={'/contact-us'}>Contact Us</Link>
-                <Link href={'/signin'}>Sign In</Link>
-                {/* <Link href={'/'} className="font-semibold hover:scale-110 transition-transform">
-                  <Text
-                    inherit
-                    variant="gradient"
-                    component="span"
-                    gradient={{ from: 'pink', to: 'yellow' }}
+            <AppShell.Header className="py-4 bg-transparent border-none px-4 flex items-center justify-between">
+              <Title order={3} className="text-lg">
+                CodeResume
+              </Title>
+
+              {session.status !== 'loading' &&
+                (user && session.status === 'authenticated' ? (
+                  // <Link href={`/u/${user.name}`}>
+                  <Menu shadow="md" width={200}>
+                    <Menu.Target>
+                      <Avatar
+                        src={user.image}
+                        alt={user.name || 'User'}
+                        radius="xl"
+                        className="cursor-pointer hover:scale-105 transition-transform"
+                      />
+                    </Menu.Target>
+
+                    <Menu.Dropdown className="bg-transparent border border-slate-300">
+                      <Menu.Label>Account</Menu.Label>
+                      <Menu.Item component={Link} href={`/u/${user.name}`}>
+                        Profile
+                      </Menu.Item>
+                      <Menu.Divider />
+                      <Menu.Item onClick={() => signIn('github', { callbackUrl: '/' })} color="red">
+                        Sign out
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                ) : (
+                  // {/* </Link> */}
+                  <Button
+                    className="!shadow-lg hover:scale-105 transition-transform"
+                    leftSection={<IconBrandGithubFilled className="h-4 w-4" />}
+                    onClick={() => signIn('github', { callbackUrl: '/' })}
                   >
-                    My Resume
-                  </Text>
-                </Link> */}
-                <ColorSchemeSwitch />
-                <div className="flex space-x-3 items-center md:hidden">
-                  <Burger opened={opened} onClick={toggle} size="sm" />
-                </div>
-              </div>
+                    Login with GitHub
+                  </Button>
+                ))}
             </AppShell.Header>
 
             <AppShell.Navbar p="md" className="shadow-md">
               Navbar
             </AppShell.Navbar>
 
-            <AppShell.Main className="p-0 pt-12">{children}</AppShell.Main>
-            <AppShell.Footer
-              pos="relative"
-              p="md"
-              className=" mt-10 border-t-2 border-solid border-zinc-300"
-            >
-              <div className="flex space-x-3 w-full">
-                <Link href="#">
-                  <Text className="text-xs underline">Terms of Service</Text>
-                </Link>
-                <Link href="#">
-                  <Text className="text-xs underline">Privacy Policy</Text>
-                </Link>
-                <Link href="#">
-                  <Text className="text-xs underline">Contact Us</Text>
-                </Link>
-              </div>
-              <div className="flex w-full justify-end">
-                <div className="flex">
-                  <IconBrandTwitterFilled className="w-7 h-7 p-1 hover:bg-zinc-200 transition rounded-md cursor-pointer" />
-                  <IconBrandFacebookFilled className="w-7 h-7 p-1 hover:bg-zinc-200 transition rounded-md cursor-pointer" />
-                  <IconBrandInstagramFilled className="w-7 h-7 p-1 hover:bg-zinc-200 transition rounded-md cursor-pointer" />
+            <AppShell.Main className="p-0">{children}</AppShell.Main>
+
+            {pathname === '/' && (
+              <footer className="border-t border-gray-300 bg-gray-100 py-6 px-4 md:px-10">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
+                  {/* Left Section */}
+                  <div>
+                    <Title order={3}>CodeResume</Title>
+                    <Text className="text-gray-600 mt-2 max-w-sm">
+                      CodeResume is building an unbiased science-backed platform for 200M builders,
+                      linking techies with top 5% paying companies and uniting talents from villages
+                      to cities.
+                    </Text>
+                    <div className="flex space-x-4 mt-4">
+                      <IconBrandTwitterFilled className="w-8 h-8 p-1.5 hover:bg-zinc-300 transition rounded-sm cursor-pointer" />
+                      <IconBrandFacebookFilled className="w-8 h-8 p-1.5 hover:bg-zinc-300 transition rounded-sm cursor-pointer" />
+                      <IconBrandInstagramFilled className="w-8 h-8 p-1.5 hover:bg-zinc-300 transition rounded-sm cursor-pointer" />
+                    </div>
+                  </div>
+
+                  {/* Middle Section */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 md:mt-0">
+                    <div>
+                      <Title order={4}>For Techies</Title>
+                      <ul className="mt-2 space-y-1">
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Feature Roadmap
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Find Jobs
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Rating Algorithm
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <Title order={4}>Use Cases</Title>
+                      <ul className="mt-2 space-y-1">
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Hiring Managers
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Recruiters/Sourcers
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Institutions
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <Title order={4}>Company</Title>
+                      <ul className="mt-2 space-y-1">
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            About Us
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Blog
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Contact
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Privacy Policy
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="#" className="text-gray-600 hover:underline">
+                            Terms of Use
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full">
-                <IconCopyright className="h-4 w-4" />
-                <Text className="text-xs">2023 CodeResume. All Rights Reserved.</Text>
-              </div>
-            </AppShell.Footer>
+              </footer>
+            )}
           </AppShell>
         </MantineProvider>
       </body>
