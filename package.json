@@ -93,6 +93,7 @@
     "@udecode/plate-toggle": "^42.0.0",
     "@udecode/plate-trailing-block": "^42.0.0",
     "@uploadthing/react": "7.1.0",
+    "@vercel/static-build": "^2.6.6",
     "ai": "^4.0.40",
     "animejs": "^3.2.2",
     "axios": "^1.7.9",
