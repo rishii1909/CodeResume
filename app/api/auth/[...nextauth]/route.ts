@@ -1,5 +1,5 @@
 import NextAuth, { Account, Profile, SessionStrategy, User, type JWT } from 'next-auth';
-import { nextAuthOptions } from './auth-options.js';
+import { nextAuthOptions } from './auth-options';
 
 // Named export for the `GET` handler
 export const GET = NextAuth(nextAuthOptions);
