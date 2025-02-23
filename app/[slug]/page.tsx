@@ -1,22 +1,15 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { CircleStackIcon } from '@heroicons/react/24/solid';
 import { Octokit } from '@octokit/rest';
 import { IconBrandGit } from '@tabler/icons-react';
 import axios from 'axios';
 import millify from 'millify';
-import { getServerSession } from 'next-auth';
-import { usePDF } from 'react-to-pdf';
 import {
-  Badge,
-  Button,
   Divider,
-  Flex,
   Grid,
   GridCol,
   List,
   ListItem,
-  Progress,
   ProgressLabel,
   ProgressRoot,
   ProgressSection,
@@ -31,8 +24,6 @@ import {
   Tooltip,
 } from '@mantine/core';
 import { githubLanguageColors } from '@/utils/github';
-import { nextAuthOptions } from '../api/auth/[...nextauth]/route';
-import { DownloadButton } from './download-button';
 
 dayjs.extend(relativeTime);
 

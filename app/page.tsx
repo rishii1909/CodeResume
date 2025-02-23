@@ -1,11 +1,10 @@
 'use client';
 
-import { AppProps } from 'next/app';
+import { NextPage } from 'next';
 import { SessionProvider as AuthSessionProvider } from 'next-auth/react';
 import { LandingPage } from '../components/landing-page/landing-page';
-import { Welcome } from '../components/Welcome/Welcome';
 
-export default function HomePage({ Component, pageProps }: AppProps) {
+const HomePage: NextPage = () => {
   return (
     <>
       <AuthSessionProvider>
@@ -14,4 +13,6 @@ export default function HomePage({ Component, pageProps }: AppProps) {
       {/* <ColorSchemeToggle /> */}
     </>
   );
-}
+};
+
+export default HomePage;

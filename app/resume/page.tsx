@@ -122,7 +122,7 @@ const editorContainerVariants = cva(
   }
 );
 
-export const EditorContainer = ({
+const EditorContainer = ({
   className,
   variant,
   ...props
@@ -179,9 +179,9 @@ const editorVariants = cva(
   }
 );
 
-export type EditorProps = PlateContentProps & VariantProps<typeof editorVariants>;
+type EditorProps = PlateContentProps & VariantProps<typeof editorVariants>;
 
-export const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
+const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
   ({ className, disabled, focused, variant, ...props }, ref) => {
     return (
       <PlateContent
@@ -204,7 +204,7 @@ export const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
 Editor.displayName = 'Editor';
 
-export default function BasicPluginsComponentsDemo() {
+function ResumePage() {
   const username = 'defunkt';
 
   const editor = usePlateEditor({
@@ -372,7 +372,7 @@ export default function BasicPluginsComponentsDemo() {
   );
 }
 
-export const basicEditorValue = [
+const basicEditorValue = [
   {
     id: '1',
     children: [
@@ -660,7 +660,7 @@ NEVER write <Block> or <Selection>.
 </Reminder>
 {prompt} about <Selection>`;
 
-export const PROMPT_TEMPLATES = {
+const PROMPT_TEMPLATES = {
   systemBlockSelecting,
   systemDefault,
   systemSelecting,
@@ -668,7 +668,7 @@ export const PROMPT_TEMPLATES = {
   userDefault,
   userSelecting,
 };
-export const createAIEditor = () => {
+const createAIEditor = () => {
   const editor = createSlateEditor({
     id: 'ai',
     plugins: [
@@ -721,7 +721,7 @@ interface SourceComponentProps extends PlateRenderElementProps {
   element: SourceElement;
 }
 
-export const useAIChatHooks = () => {
+const useAIChatHooks = () => {
   const { editor, tf } = useEditorPlugin<AIPluginConfig>({ key: 'ai' });
   const { useOption } = useEditorPlugin<AIChatPluginConfig>({ key: 'aiChat' });
   const mode = useOption('mode');
@@ -770,3 +770,5 @@ export const useAIChatHooks = () => {
     },
   });
 };
+
+export default ResumePage;
