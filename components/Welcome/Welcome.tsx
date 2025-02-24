@@ -7,7 +7,7 @@ import { RocketLaunchIcon } from '@heroicons/react/24/solid';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Octokit } from '@octokit/rest';
 import isHotkey from 'is-hotkey';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { Fade } from 'react-awesome-reveal';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';

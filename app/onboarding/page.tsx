@@ -5,9 +5,9 @@ import { ArrowTopRightOnSquareIcon, UserIcon, UsersIcon } from '@heroicons/react
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { IconBrandGithubFilled } from '@tabler/icons-react';
 import { motion } from 'motion/react';
-import { signIn } from 'next-auth/react';
-import { Avatar, Button, Input, Modal, Switch, Text, Title } from '@mantine/core';
+import { Button, Input, Modal, Switch, Text, Title } from '@mantine/core';
 import useAuthStore from '@/stores/auth.store';
+import { handleGithubAuth } from '@/utils/auth.js';
 
 export default function AssessmentSelector() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -190,7 +190,7 @@ export default function AssessmentSelector() {
               className="!shadow-lg hover:scale-105 transition-transform"
               leftSection={<IconBrandGithubFilled className="h-4 w-4" />}
               rightSection={<ArrowRightIcon className="h-4 w-4" />}
-              onClick={() => signIn('github', { callbackUrl: '/' })}
+              onClick={handleGithubAuth}
             >
               Login with GitHub
             </Button>

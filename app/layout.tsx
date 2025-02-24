@@ -28,8 +28,9 @@ import {
 import '@mantine/carousel/styles.css';
 
 import { usePathname } from 'next/navigation.js';
-import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import { SessionProvider, signOut, useSession } from 'next-auth/react';
 import useAuthStore from '@/stores/auth.store';
+import { handleGithubAuth } from '@/utils/auth';
 
 export default function RootLayout({ children }: { children: any }) {
   const [opened, { toggle }] = useDisclosure(false);
@@ -113,7 +114,7 @@ function SessionContent({
                         Profile
                       </Menu.Item>
                       <Menu.Divider />
-                      <Menu.Item onClick={() => signIn('github', { callbackUrl: '/' })} color="red">
+                      <Menu.Item onClick={() => signOut()} color="red">
                         Sign out
                       </Menu.Item>
                     </Menu.Dropdown>
@@ -123,7 +124,7 @@ function SessionContent({
                   <Button
                     className="!shadow-lg hover:scale-105 transition-transform"
                     leftSection={<IconBrandGithubFilled className="h-4 w-4" />}
-                    onClick={() => signIn('github', { callbackUrl: '/' })}
+                    onClick={handleGithubAuth}
                   >
                     Login with GitHub
                   </Button>
