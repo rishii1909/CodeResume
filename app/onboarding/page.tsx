@@ -7,7 +7,7 @@ import { IconBrandGithubFilled } from '@tabler/icons-react';
 import { motion } from 'motion/react';
 import { Button, Input, Modal, Switch, Text, Title } from '@mantine/core';
 import useAuthStore from '@/stores/auth.store';
-import { handleGithubAuth } from '@/utils/auth.js';
+import { handleGithubAuth } from '@/utils/auth';
 
 export default function AssessmentSelector() {
   const [modalOpen, setModalOpen] = useState(false);
