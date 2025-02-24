@@ -53,7 +53,8 @@ export const HeroSection = () => {
   return (
     <LandingSection
       fullWidth
-      className="flex w-full !pt-36 items-center flex-col bg-gradient-to-b from-slate-200 via-slate-100 to-transparent"
+      className="flex max-h-[auto]
+       w-full !pt-36 items-center flex-col bg-gradient-to-b from-slate-200 via-slate-100 to-transparent"
     >
       <motion.div
         initial="hidden"
@@ -72,7 +73,7 @@ export const HeroSection = () => {
           </motion.span>
         </Title>
 
-        <div className="h-[600px] w-full mt-12 ">
+        <div className=" w-full mt-12 ">
           <motion.div variants={buttonAndDivVariants} className="flex flex-col items-center">
             <div className="flex items-center space-x-4 justify-center pr-32 ">
               <motion.div variants={arrowVariants}>

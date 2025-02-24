@@ -29,7 +29,7 @@ export const animationItem = {
 export const FAQSection: React.FC = () => {
   return (
     <LandingSection
-      className="!h-fit py-12 mb-24 border-t border-slate-200 rounded-none md:rounded-lg"
+      className="!h-fit py-12 mb-24 border-t border-slate-200 rounded-none md:rounded-lg "
       id="how-it-works"
       fullWidth
     >

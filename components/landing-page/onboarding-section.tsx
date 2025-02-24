@@ -59,7 +59,10 @@ export const OnboardingSection: React.FC = () => {
   };
 
   return (
-    <LandingSection className="rounded-none md:rounded-lg mb-[460px]" id="about-us">
+    <LandingSection
+      className="rounded-none md:rounded-lg  h-fit mb-[1800px]  md:mb-[840px] lg:mb-"
+      id="about-us"
+    >
       <StaggerVisualizer>
         <motion.div
           className="text-center mb-12 mt-12"
@@ -87,7 +90,7 @@ export const OnboardingSection: React.FC = () => {
           whileInView="visible"
           // viewport={{ once: true }}
         >
-          <div className="flex flex-row justify-between w-full space-x-8">
+          <div className="flex flex-col md:flex-row justify-between items-center w-full md:p-0 md:space-x-8 md:space-y-0 space-y-6">
             {[
               {
                 number: 1,
@@ -117,7 +120,7 @@ export const OnboardingSection: React.FC = () => {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                className="flex flex-col items-start space-y-4 w-1/3 p-6 bg-white border border-gray-300 rounded-md shadow-md"
+                className="flex flex-col items-start space-y-4 md:w-1/3 p-6 bg-white border border-gray-300 rounded-md shadow-md"
                 variants={itemVariants}
               >
                 <motion.div className="flex items-center space-x-3" variants={numberVariants}>

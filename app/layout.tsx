@@ -32,7 +32,7 @@ import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import useAuthStore from '@/stores/auth.store';
 
 export default function RootLayout({ children }: { children: any }) {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle }] = useDisclosure(false);
   const pathname = usePathname();
 
   return (
@@ -78,7 +78,7 @@ function SessionContent({
       <body>
         <MantineProvider theme={{ defaultRadius: 'md', ...theme }}>
           <AppShell
-            // header={{ height: 50 }}
+            header={{ height: 72 }}
             navbar={{
               width: 300,
               breakpoint: 'sm',
@@ -89,7 +89,7 @@ function SessionContent({
             }}
             padding="sm"
           >
-            <AppShell.Header className="py-4 bg-transparent border-none px-4 flex items-center justify-between">
+            <AppShell.Header className="py-4  px-4 flex items-center border-b border-solid border-zinc-300 justify-between bg-slate-50">
               <Title order={3} className="text-lg">
                 CodeResume
               </Title>
@@ -107,7 +107,7 @@ function SessionContent({
                       />
                     </Menu.Target>
 
-                    <Menu.Dropdown className="bg-transparent border border-slate-300">
+                    <Menu.Dropdown className="bg-slate-50 border border-slate-300">
                       <Menu.Label>Account</Menu.Label>
                       <Menu.Item component={Link} href={`/u/${user.name}`}>
                         Profile

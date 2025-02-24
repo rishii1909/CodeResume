@@ -138,17 +138,19 @@ const StaggerVisualizer: React.FC<{ children?: React.ReactNode }> = ({ children 
   }, []);
 
   return (
-    <div className="animation-wrapper min-w-full min-h-screen h-[1520px] relative ">
-      <div
-        ref={staggerVisualizerEl}
-        className="stagger-visualizer absolute w-[1100px] origin-top-left opacity-10"
-        // style={{ paddingBottom: '400px' }}
-      >
-        <div className="cursor absolute top-0 left-0 w-[37px] h-[37px] m-[9px] border-double border-8 border-slate-500 bg-slate-200 rounded-full"></div>
-        <div className="dots-wrapper absolute top-0 left-0 w-full h-full flex flex-wrap justify-center items-center transform-z-0"></div>
-      </div>
-      <div className="absolute top-0 left-0 w-full h-full flex justify-start items-center flex-col p-2 ">
-        {children}
+    <div className="relative">
+      <div className="animation-wrapper min-w-full min-h-[1520px] h-fit">
+        <div
+          ref={staggerVisualizerEl}
+          className="stagger-visualizer absolute w-[1100px] origin-top-left opacity-10"
+          // style={{ paddingBottom: '400px' }}
+        >
+          <div className="cursor absolute top-0 left-0 w-[37px] h-[37px] m-[9px] border-double border-8 border-slate-500 bg-slate-200 rounded-full"></div>
+          <div className="dots-wrapper absolute top-0 left-0 w-full h-full flex flex-wrap justify-center items-center transform-z-0"></div>
+        </div>
+        <div className="absolute top-0 left-0 w-full flex justify-start items-center flex-col p-2 ">
+          {children}
+        </div>
       </div>
     </div>
   );

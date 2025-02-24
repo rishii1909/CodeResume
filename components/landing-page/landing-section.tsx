@@ -17,7 +17,7 @@ export const LandingSection: React.FC<LandingSectionProps> = ({
       className={clsx(
         fullWidth ? 'w-full' : 'mx-auto max-w-[1200px]',
         'px-2 sm:px-4 lg:px-6 py-12 pt-12 lg:py-12',
-        'h-screen',
+        'h-screen max-h-[1400px]',
         className
       )}
     >

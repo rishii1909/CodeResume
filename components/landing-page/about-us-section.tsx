@@ -10,7 +10,7 @@ import { animationContainer, animationItem, LandingSection } from './landing-sec
 export const AboutUsSection: React.FC = () => {
   return (
     <LandingSection
-      className="!h-fit bg-gradient-to-b via-slate-200 to-transparent pb-16 rounded-none md:rounded-lg"
+      className="!h-fit bg-gradient-to-b via-slate-200 to-transparent pb-16 rounded-none md:rounded-lg max-h-fit"
       id="about-us"
       fullWidth
     >
